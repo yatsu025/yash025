@@ -79,6 +79,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { name: "author", content: "Yash Srivastava" },
+      { name: "google-site-verification", content: "_UEl_hDdblLwjjZS-Vofa3vvPUaH4-9f-OGOQHW6KqU" },
       { name: "theme-color", content: "#F2EDE4" },
     ],
     links: [

@@ -3,7 +3,7 @@ export const site = {
   short: "YS.dev",
   role: "Frontend & Full Stack Developer",
   location: "Prayagraj, Uttar Pradesh, India",
-  url: "https://yatsu025.vercel.app",
+  url: "https://yash025.vercel.app",
   email: "yashsrivastava1808@gmail.com",
   phone: "+91 95549 24590",
   github: "https://github.com/yatsu025",
