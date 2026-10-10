@@ -1,9 +1,12 @@
+import resumePdf from "@/assets/yash-resume.pdf";
+
 export const site = {
   name: "Yash Srivastava",
   short: "YS.dev",
   role: "Frontend & Full Stack Developer",
   location: "Prayagraj, Uttar Pradesh, India",
-  url: "https://yash025.vercel.app",
+  siteUrl: "https://yash025.vercel.app",
+  freelanceUrl: "https://yatsu025.vercel.app",
   email: "yashsrivastava1808@gmail.com",
   phone: "+91 95549 24590",
   github: "https://github.com/yatsu025",
@@ -11,10 +14,10 @@ export const site = {
   whatsappNumber: "919554924590",
   whatsappMessage: "Hi Yash, I saw your portfolio and I'd like to talk about an opportunity.",
   heroImageMode: "both" as "avatar" | "both",
-  resume: "/__l5e/assets-v1/f0d5a0a4-2daf-482a-a661-9f1213ca0621/yash-srivastava-resume.pdf",
-  title: "Yash Srivastava in Prayagraj — Frontend Developer & Hackathon Developer",
+  resume: resumePdf,
+  title: "Yash Srivastava in Prayagraj — Frontend & Full Stack Developer",
   description:
-    "Yash Srivastava is a frontend & full stack developer in Prayagraj building fast React, Next.js and TypeScript web apps. 14+ hackathons, real users, open to work.",
+    "Yash Srivastava is a frontend and full stack developer in Prayagraj and BCA student at UIM (FUGS). 14+ hackathons, 50+ real users, open to jobs and internships.",
   pitch:
     "I build fast, production-ready web apps with React, Next.js and TypeScript — and I've shipped software real people actually use.",
   proof: "Built the official SIH Internal Hackathon platform for my college — used by 50+ participants.",
@@ -29,7 +32,7 @@ export const stats = [
   { value: 14, suffix: "+", label: "Hackathons" },
   { value: 65, suffix: "+", label: "Real users across my live apps" },
   { value: 24, suffix: "", label: "GitHub repos" },
-  { value: 2, suffix: "", label: "Freelance client projects" },
+  { value: 2, suffix: "", label: "Client projects shipped" },
 ];
 
 export const education = [
@@ -43,7 +46,8 @@ export const navLinks = [
   { label: "About", href: "#about" },
   { label: "Skills", href: "#skills" },
   { label: "Certificates", href: "#certificates" },
-  { label: "Freelance", href: "/freelance" },
+  { label: "Education", href: "/education" },
+  { label: "Freelance", href: "https://yatsu025.vercel.app" },
   { label: "Resume", href: "#resume" },
   { label: "Contact", href: "#contact" },
 ];

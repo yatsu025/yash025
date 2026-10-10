@@ -3,17 +3,20 @@ import { motion, AnimatePresence } from "motion/react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { site, marquee, stats, education, navLinks } from "@/data/site";
+import avatarImg from "@/assets/yash-anime-avatar.png";
+import photoImg from "@/assets/yash-photo.jpg";
+import { whatsappUrl, site, marquee, stats, education, navLinks } from "@/data/site";
 import { projects, type Project } from "@/data/projects";
 import { certificates, type Certificate } from "@/data/certificates";
 import { skills } from "@/data/skills";
+import { WhatsAppIcon } from "./shared";
 import { Reveal, MaskLine, Counter, Magnetic, ThemeToggle } from "./fx";
 
 const ext = { target: "_blank", rel: "noopener noreferrer" } as const;
 
 function Label({ n, children }: { n: string; children: string }) {
   return (
-    <div className="mono mb-8 flex items-center gap-4 text-xs uppercase">
+    <div className="mono mb-8 flex items-center gap-4 text-[13px] uppercase">
       <span className="font-bold text-primary">({n})</span>
       <span className="h-px flex-1 bg-foreground" />
       <span>{children}</span>
@@ -35,14 +38,14 @@ export function Navbar() {
     <header className="sticky top-0 z-50 border-b-2 border-foreground bg-background pt-[env(safe-area-inset-top)]">
       <nav aria-label="Primary" className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 md:px-8">
         <a href="#top" className="display text-2xl">YS<span className="text-primary">.</span>dev</a>
-        <ul className="mono hidden gap-6 text-xs uppercase lg:flex">
+        <ul className="mono hidden gap-5 text-[13px] uppercase lg:flex">
           {navLinks.map((l) => (
-            <li key={l.href}><a href={l.href} className="hover:text-primary">{l.label}</a></li>
+            <li key={l.href}><a href={l.href} {...(l.href.startsWith("http") ? ext : {})} className="hover:text-primary">{l.label}</a></li>
           ))}
         </ul>
         <div className="flex items-center gap-3">
           <ThemeToggle />
-          <a href="#contact" className="btn-brutal hidden bg-primary !px-4 !py-2 sm:inline-flex">Hire Me</a>
+          <a href={whatsappUrl} {...ext} className="btn-brutal hidden bg-primary !px-4 !py-2 sm:inline-flex">Hire Me</a>
           <button className="mono border-2 border-foreground px-3 py-2 text-xs font-bold lg:hidden" aria-expanded={open} aria-controls="mobile-nav" onClick={() => setOpen(!open)}>
             {open ? "Close" : "Menu"}
           </button>
@@ -51,7 +54,7 @@ export function Navbar() {
       {open && (
         <ul id="mobile-nav" className="mono border-t-2 border-foreground px-4 py-4 text-sm uppercase lg:hidden">
           {navLinks.map((l) => (
-            <li key={l.href}><a href={l.href} onClick={() => setOpen(false)} className="block py-2">{l.label}</a></li>
+            <li key={l.href}><a href={l.href} {...(l.href.startsWith("http") ? ext : {})} onClick={() => setOpen(false)} className="block py-2">{l.label}</a></li>
           ))}
         </ul>
       )}
@@ -61,38 +64,42 @@ export function Navbar() {
 
 export function Hero() {
   return (
-    <section id="top" className="relative mx-auto max-w-7xl px-4 pb-16 pt-10 md:px-8 md:pt-16">
-      <div className="mono mb-8 flex flex-wrap justify-between gap-2 text-xs uppercase">
+    <section id="top" className="relative mx-auto max-w-7xl px-4 pb-12 pt-8 md:px-8 md:pt-10">
+      <div className="mono mb-6 flex flex-wrap justify-between gap-2 text-[13px] uppercase">
         <span>Portfolio — Vol. 2026</span>
         <span>{site.location}</span>
       </div>
-      <h1 className="display text-[clamp(3.5rem,15vw,13rem)]">
+      <h1 className="display text-[clamp(3.2rem,min(10vw,14vh),9rem)] tracking-[-0.015em]">
         <MaskLine delay={0.1}>Yash</MaskLine>
         <MaskLine delay={0.22}><span className="pl-[8vw] text-primary">Srivastava</span></MaskLine>
       </h1>
-      <div className="mt-10 grid gap-10 md:grid-cols-12">
+      <div className="mt-6 grid gap-10 md:grid-cols-12">
         <div className="md:col-span-7">
           <p className="mono text-sm font-bold uppercase md:text-base">
-            Frontend &amp; Full Stack Developer based in Prayagraj, Uttar Pradesh, India
+            Frontend &amp; Full Stack Developer in Prayagraj (Allahabad), Uttar Pradesh
           </p>
           <p className="mt-4 max-w-xl text-xl leading-snug md:text-2xl">{site.pitch}</p>
-          <div className="mt-8 flex flex-wrap gap-4">
-            <Magnetic><a href="#contact" className="btn-brutal bg-primary">Hire Me <Arrow /></a></Magnetic>
+          <p className="mt-3 max-w-xl text-base leading-relaxed text-muted-foreground">BCA student at United Institute of Management (FUGS), Prof. Rajju Bhaiya University · 14+ hackathons · 50+ real users on my college platform.</p>
+          <div className="mt-6 flex flex-wrap gap-4">
+            <Magnetic><a href={whatsappUrl} {...ext} className="btn-brutal bg-primary">Hire Me <Arrow /></a></Magnetic>
             <Magnetic><a href={site.resume} download className="btn-brutal bg-background">Download Resume</a></Magnetic>
             <Magnetic><a href="#work" className="btn-brutal bg-secondary text-secondary-foreground">See my work</a></Magnetic>
           </div>
-          <p className="mono mt-8 max-w-xl border-l-4 border-primary pl-3 text-xs">
+          <p className="mono mt-6 max-w-xl border-l-4 border-primary pl-3 text-[13px] leading-[1.9]">
             ▲ <a href={site.proofUrl} {...ext} className="underline decoration-2 underline-offset-4 hover:text-primary">{site.proof}</a>
           </p>
-          <p className="mono mt-3 text-xs text-muted-foreground">Also open to select freelance work — <a href={`mailto:${site.email}`} className="underline">email me</a>.</p>
         </div>
-        <div className="flex items-start justify-end md:col-span-5">
-          <a href="#contact" aria-label="Open to work — go to contact" className="relative grid h-40 w-40 place-items-center rounded-full border-2 border-foreground bg-primary animate-wobble md:h-48 md:w-48">
+        <div className="relative mx-auto w-full max-w-[17rem] md:col-span-5 lg:max-w-[19rem]">
+          <div className="group relative aspect-[4/5] -rotate-3 border-2 border-foreground bg-background shadow-[var(--shadow-hard)] motion-safe:animate-[float_4s_ease-in-out_infinite]">
+            <img src={avatarImg} alt="Yash Srivastava, developer in Prayagraj (anime avatar)" width={800} height={1000} fetchPriority="high" className="absolute inset-0 h-full w-full object-cover transition-opacity duration-300 group-hover:opacity-0" />
+            {site.heroImageMode === "both" && <img src={photoImg} alt="" aria-hidden width={800} height={1000} loading="lazy" className="absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-300 group-hover:opacity-100" />}
+          </div>
+          <a href={whatsappUrl} {...ext} aria-label="Open to work — chat on WhatsApp" className="absolute -bottom-8 -left-6 grid h-32 w-32 place-items-center rounded-full border-2 border-foreground bg-primary animate-wobble md:h-36 md:w-36">
             <svg viewBox="0 0 200 200" className="absolute inset-0 animate-spin-slow" aria-hidden>
               <defs><path id="c" d="M100,100 m-78,0 a78,78 0 1,1 156,0 a78,78 0 1,1 -156,0" /></defs>
               <text className="mono" fontSize="15" fontWeight="700" letterSpacing="3" fill="currentColor"><textPath href="#c">OPEN TO WORK ✦ INTERNSHIPS ✦ FULL-TIME ✦</textPath></text>
             </svg>
-            <span className="display text-3xl">Hire<br />me ↗</span>
+            <span className="display text-2xl">Hire<br />me ↗</span>
           </a>
         </div>
       </div>
@@ -165,7 +172,8 @@ function ProjectModal({ p, onClose }: { p: Project; onClose: () => void }) {
 export function Work() {
   const [active, setActive] = useState<Project | null>(null);
   const featured = projects.filter((p) => p.featured);
-  const more = projects.filter((p) => !p.featured);
+  const more = projects.filter((p) => !p.featured && p.category === "own");
+  const clients = projects.filter((p) => p.category === "client");
   return (
     <section id="work" className="mx-auto max-w-7xl px-4 py-24 md:px-8">
       <Label n="01">Selected work</Label>
@@ -180,7 +188,7 @@ export function Work() {
                   <h3 className="display text-4xl md:text-6xl">{p.title}</h3>
                   <p className="mt-2 max-w-2xl text-lg">{p.tagline}</p>
                   {p.badge && <p className="mono mt-3 inline-block border-2 border-foreground bg-primary px-2 py-1 text-xs font-bold group-hover:bg-background">● {p.badge}</p>}
-                  <p className="mono mt-3 text-xs text-muted-foreground group-hover:text-foreground">{p.tech?.slice(0, 5).join(" / ")}</p>
+                  <p className="mono mt-3 text-[13px] text-muted-foreground group-hover:text-foreground">{p.tech?.slice(0, 5).join(" / ")}</p>
                 </div>
                 <span className="grid h-14 w-14 place-items-center border-2 border-foreground bg-background transition-transform duration-300 group-hover:-rotate-45"><Arrow className="h-6 w-6" /></span>
               </a>
@@ -192,7 +200,22 @@ export function Work() {
           </Reveal>
         ))}
       </ol>
-      <h3 className="mono mt-20 mb-4 text-xs font-bold uppercase">More projects ({more.length})</h3>
+      <div className="mt-20 flex flex-wrap items-end justify-between gap-4"><h3 className="display text-4xl md:text-6xl">Client work</h3><a href={site.freelanceUrl} {...ext} className="mono text-[13px] font-bold uppercase underline decoration-2 underline-offset-4 hover:text-primary">See my freelance site →</a></div>
+      <div className="mt-8 grid gap-6 md:grid-cols-2">
+        {clients.map((p) => {
+          const href = p.liveUrl || p.repoUrl;
+          return (
+            <article key={p.slug} className="brutal-box p-6 shadow-[var(--shadow-hard)]">
+              <p className="mono text-[13px] font-bold uppercase text-primary">Freelance · Client project</p>
+              <h4 className="display mt-3 text-3xl md:text-4xl">{p.title}</h4>
+              <p className="mt-3 text-base md:text-lg">{p.tagline}</p>
+              {p.tech && <p className="mono mt-3 text-[13px] text-muted-foreground">{p.tech.join(" / ")}</p>}
+              {href && <div className="mt-5 flex flex-wrap gap-3">{p.liveUrl && <a href={p.liveUrl} {...ext} className="btn-brutal bg-primary !px-4 !py-2">Live ↗</a>}{p.repoUrl && <a href={p.repoUrl} {...ext} className="btn-brutal bg-background !px-4 !py-2">GitHub Code</a>}</div>}
+            </article>
+          );
+        })}
+      </div>
+      <h3 className="mono mt-20 mb-4 text-[13px] font-bold uppercase">More projects ({more.length})</h3>
       <ul className="grid border-l-2 border-t-2 border-foreground sm:grid-cols-2 lg:grid-cols-3">
         {more.map((p) => {
           const href = p.liveUrl || p.repoUrl;
@@ -222,7 +245,8 @@ export function About() {
       <div className="mx-auto max-w-7xl px-4 py-24 md:px-8">
         <Label n="02">About</Label>
         <div className="grid gap-12 md:grid-cols-12">
-          <Reveal className="md:col-span-5"><h2 className="display text-[clamp(3rem,8vw,6rem)]">Builds<br />under<br /><span className="text-primary">pressure.</span></h2></Reveal>
+          <Reveal className="md:col-span-5"><h2 className="display text-[clamp(3rem,8vw,6rem)]">Builds<br />under<br /><span className="text-primary">pressure.</span></h2>
+            <img src={photoImg} alt="Yash Srivastava, developer in Prayagraj" width={600} height={750} loading="lazy" className="mt-10 aspect-[4/5] w-full max-w-xs rotate-2 border-2 border-foreground object-cover shadow-[var(--shadow-hard)]" /></Reveal>
           <Reveal delay={0.1} className="space-y-5 text-xl leading-snug md:col-span-7">
             <p>I'm Yash — a BCA student (2024–2027) at United Institute of Management (FUGS), Prof. Rajju Bhaiya University, and a developer who'd rather ship than talk about shipping.</p>
             <p>14+ hackathons taught me to build fast, scope hard and deliver under a deadline. I'm a PW Campus Ambassador, and I'm growing from frontend into full stack — MERN and Django.</p>
@@ -254,7 +278,7 @@ export function Skills() {
               <h3 className="mono text-sm font-bold uppercase md:col-span-3">{String(gi + 1).padStart(2, "0")} — {g.group}</h3>
               <ul className="flex flex-wrap gap-3 md:col-span-9">
                 {g.items.map((s, i) => (
-                  <li key={s} className={`border-2 border-foreground bg-background px-4 py-2 text-lg font-bold transition-all duration-200 hover:bg-primary hover:shadow-[var(--shadow-hard-sm)] ${i % 2 ? "hover:rotate-2" : "hover:-rotate-2"}`}>{s}</li>
+                  <li key={s} className={`border-2 border-foreground bg-background px-4 py-2 text-base font-bold transition-all duration-200 hover:bg-primary md:text-lg hover:shadow-[var(--shadow-hard-sm)] ${i % 2 ? "hover:rotate-2" : "hover:-rotate-2"}`}>{s}</li>
                 ))}
               </ul>
             </Reveal>
@@ -268,9 +292,9 @@ export function Skills() {
 function CertCard({ c, onOpen }: { c: Certificate; onOpen: (c: Certificate) => void }) {
   const body = (
     <>
-      <span className="mono text-[10px] uppercase text-muted-foreground">{c.group === "hackathon" ? "Hackathon" : "Certification"}</span>
+      <span className="mono text-[13px] uppercase text-muted-foreground">{c.group === "hackathon" ? "Hackathon" : "Certification"}</span>
       <span className="mt-2 block text-lg font-bold leading-tight">{c.title}</span>
-      <span className="mono mt-3 block text-xs">— {c.issuer}</span>
+      {c.issuer && <span className="mono mt-3 block text-[13px]">— {c.issuer}</span>}
     </>
   );
   const cls = "mx-3 block w-64 shrink-0 border-2 border-dashed border-foreground bg-background p-5 outline outline-2 outline-offset-4 outline-foreground text-left";
@@ -282,7 +306,7 @@ function CertRow({ items, rev, onOpen, label }: { items: Certificate[]; rev?: bo
     <div className="overflow-hidden py-4 pause-hover" aria-label={label}>
       <div className={`flex w-max ${rev ? "animate-marquee-rev" : "animate-marquee"}`}>
         {[0, 1].map((k) => (
-          <div key={k} className="flex" aria-hidden={k === 1}>{items.map((c) => <CertCard key={c.title + k} c={c} onOpen={onOpen} />)}</div>
+          <div key={k} className="flex" aria-hidden={k === 1 ? true : undefined} data-nosnippet={k === 1 ? "" : undefined} inert={k === 1 ? true : undefined}>{items.map((c) => <CertCard key={c.title + k} c={c} onOpen={onOpen} />)}</div>
         ))}
       </div>
     </div>
@@ -307,7 +331,7 @@ export function Certificates() {
         {open && (
           <motion.div className="fixed inset-0 z-[75] grid place-items-center bg-foreground/60 p-4" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setOpen(null)} role="dialog" aria-modal="true">
             <div className="brutal-box w-full max-w-md p-8 shadow-[var(--shadow-hard)]" onClick={(e) => e.stopPropagation()}>
-              <p className="mono text-xs uppercase">{open.issuer}</p>
+              {open.issuer && <p className="mono text-[13px] uppercase">{open.issuer}</p>}
               <h3 className="display mt-2 text-4xl">{open.title}</h3>
               <div className="mt-6 flex gap-3">
                 <a href={open.url} {...ext} className="btn-brutal bg-primary">View certificate</a>
@@ -369,8 +393,8 @@ export function Resume() {
           <h2 className="display text-[clamp(3.5rem,11vw,9rem)]">The one<br />pager.</h2>
         </div>
         <div className="flex flex-wrap gap-4">
-          <Magnetic><a href={site.resume} {...ext} className="btn-brutal bg-background">View Resume (PDF)</a></Magnetic>
-          <Magnetic><a href={site.resume} download className="btn-brutal bg-foreground text-background">Download Resume ↓</a></Magnetic>
+          <Magnetic><a href={site.resume} {...ext} className="btn-brutal bg-background !px-8 !py-5 !text-base">View Resume (PDF)</a></Magnetic>
+          <Magnetic><a href={site.resume} download className="btn-brutal bg-foreground text-background !px-8 !py-5 !text-base">Download Resume ↓</a></Magnetic>
         </div>
       </div>
     </section>
@@ -399,13 +423,14 @@ export function Contact() {
         <Label n="08">Contact</Label>
         <h2 className="display text-[clamp(3rem,9vw,7.5rem)]">Let's build something — <span className="text-primary">or hire me.</span></h2>
         <a href={`mailto:${site.email}`} className="mt-10 block break-all text-[clamp(1.4rem,4.5vw,3.5rem)] font-extrabold underline decoration-primary decoration-4 underline-offset-8 hover:text-primary">{site.email}</a>
-        <div className="mono mt-6 flex flex-wrap gap-6 text-sm">
+        <a href={whatsappUrl} {...ext} className="btn-brutal mt-8 bg-primary !px-8 !py-5 !text-base"><WhatsAppIcon className="h-6 w-6" /> Hire Me on WhatsApp</a>
+        <div className="mono mt-8 flex flex-wrap gap-6 text-[15px]">
           <a href={`tel:${site.phone.replace(/\s/g, "")}`} className="hover:text-primary">{site.phone}</a>
           <a href={site.github} {...ext} className="hover:text-primary">GitHub ↗</a>
           <a href={site.linkedin} {...ext} className="hover:text-primary">LinkedIn ↗</a>
           <span className="text-muted-foreground">Reply within 24 hours</span>
         </div>
-        <form onSubmit={handleSubmit(submit)} noValidate className="mt-16 grid max-w-3xl gap-5">
+        <form onSubmit={handleSubmit(submit)} noValidate className="mt-16 grid w-full gap-5">
           <div className="grid gap-5 md:grid-cols-2">
             <label className="block"><span className="mono text-xs font-bold uppercase">Name</span><input {...register("name")} className={field} autoComplete="name" />{errors.name && <span className="mono text-xs text-destructive">{errors.name.message}</span>}</label>
             <label className="block"><span className="mono text-xs font-bold uppercase">Email</span><input type="email" {...register("email")} className={field} autoComplete="email" />{errors.email && <span className="mono text-xs text-destructive">{errors.email.message}</span>}</label>
@@ -422,13 +447,54 @@ export function Footer() {
   return (
     <footer className="border-t-2 border-foreground bg-foreground text-background">
       <div className="mx-auto flex max-w-7xl flex-col gap-4 px-4 py-8 pb-[calc(2rem+env(safe-area-inset-bottom))] md:flex-row md:items-center md:justify-between md:px-8">
-        <p className="mono text-xs">© 2026 Yash Srivastava · Prayagraj, India</p>
-        <ul className="mono flex gap-6 text-xs uppercase">
+        <p className="mono text-[13px]">© 2026 Yash Srivastava · Prayagraj, India</p>
+        <ul className="mono flex flex-wrap gap-6 text-[13px] uppercase">
+          <li><a href="/certifications" className="hover:text-primary">Certifications</a></li>
+          <li><a href="/hackathons" className="hover:text-primary">Hackathons</a></li>
+          <li><a href="/education" className="hover:text-primary">Education</a></li>
+          <li><a href={site.freelanceUrl} {...ext} className="hover:text-primary">Freelance ↗</a></li>
           <li><a href={site.github} {...ext} className="hover:text-primary">GitHub</a></li>
           <li><a href={site.linkedin} {...ext} className="hover:text-primary">LinkedIn</a></li>
           <li><a href={`mailto:${site.email}`} className="hover:text-primary">Email</a></li>
         </ul>
       </div>
     </footer>
+  );
+}
+
+export const faqs: { q: string; a: string; link?: { href: string; label: string } }[] = [
+  { q: "Who is Yash Srivastava in Prayagraj?", a: "Yash Srivastava is a frontend and full stack developer in Prayagraj (Allahabad), Uttar Pradesh. He is a BCA student at United Institute of Management (FUGS), Prof. Rajju Bhaiya University, has competed in 14+ hackathons and built his college's SIH Internal Hackathon platform used by 50+ participants." },
+  { q: "Is there a full stack developer in Prayagraj open to a job or internship?", a: "Yes. Yash is open to internships and full-time frontend or full stack roles, on-site in Prayagraj or remote. He works with React, Next.js, TypeScript, Node.js and Supabase. The quickest way to reach him is WhatsApp or email." },
+  { q: "Which college does Yash study at?", a: "Yash is pursuing BCA (2024–2027) at United Institute of Management (FUGS), affiliated with Prof. Rajju Bhaiya University, Prayagraj. He completed his 10th and 12th (UP Board) at P.N. Public Inter College, Prayagraj." },
+  { q: "Which hackathons has Yash competed in?", a: "Yash has taken part in 14+ hackathons, including Ace Hack 4.0, Code Verse, Hack with Uttar Pradesh, Hackshatra, Kode Kalesh, Namespace, Hackerground, BNB Chain AI Hackathon and Vibe Hack 2.0." },
+  { q: "Which certifications does Yash hold?", a: "His certifications include AWS Cloud Practitioner, Claude Code in Action, Introduction to Claude Cowork, the Accenture Developer Program, TATA Digital Skills and freeCodeCamp JavaScript Algorithms & Data Structures." },
+  { q: "Does Yash take freelance work?", a: "Yes — freelance projects are handled through his separate freelance website.", link: { href: site.freelanceUrl, label: "Visit the freelance site ↗" } },
+];
+
+export function FAQ() {
+  return (
+    <section id="faq" aria-labelledby="faq-h" className="border-t-2 border-foreground">
+      <div className="mx-auto max-w-7xl px-4 py-24 md:px-8">
+        <Label n="09">FAQ</Label>
+        <h2 id="faq-h" className="display mb-10 text-[clamp(3rem,8vw,6rem)]">Questions</h2>
+        <div className="border-t-2 border-foreground">
+          {faqs.map((f) => (
+            <details key={f.q} className="group border-b-2 border-foreground">
+              <summary className="flex cursor-pointer list-none items-center justify-between gap-6 py-6 text-xl font-bold md:text-2xl [&::-webkit-details-marker]:hidden">
+                <h3>{f.q}</h3>
+                <span aria-hidden className="display text-3xl transition-transform group-open:rotate-45">+</span>
+              </summary>
+              <p className="max-w-3xl pb-6 text-base leading-relaxed md:text-lg">{f.a} {f.link && <a href={f.link.href} {...ext} className="font-bold underline">{f.link.label}</a>}</p>
+            </details>
+          ))}
+        </div>
+        <nav aria-label="More about Yash" className="mono mt-10 flex flex-wrap gap-6 text-[13px] font-bold uppercase">
+          <a href="/certifications" className="underline">Certifications</a>
+          <a href="/hackathons" className="underline">Hackathons</a>
+          <a href="/education" className="underline">Education</a>
+          <a href="/projects/sih-internal-uim" className="underline">SIH project</a>
+        </nav>
+      </div>
+    </section>
   );
 }

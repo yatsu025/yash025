@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as CertificationsRouteImport } from './routes/certifications'
+import { Route as EducationRouteImport } from './routes/education'
 import { Route as FreelanceRouteImport } from './routes/freelance'
 import { Route as HackathonsRouteImport } from './routes/hackathons'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
@@ -24,6 +25,11 @@ const IndexRoute = IndexRouteImport.update({
 const CertificationsRoute = CertificationsRouteImport.update({
   id: '/certifications',
   path: '/certifications',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EducationRoute = EducationRouteImport.update({
+  id: '/education',
+  path: '/education',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FreelanceRoute = FreelanceRouteImport.update({
@@ -50,6 +56,7 @@ const ProjectsSlugRoute = ProjectsSlugRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/certifications': typeof CertificationsRoute
+  '/education': typeof EducationRoute
   '/freelance': typeof FreelanceRoute
   '/hackathons': typeof HackathonsRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
@@ -58,6 +65,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/certifications': typeof CertificationsRoute
+  '/education': typeof EducationRoute
   '/freelance': typeof FreelanceRoute
   '/hackathons': typeof HackathonsRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
@@ -67,6 +75,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/certifications': typeof CertificationsRoute
+  '/education': typeof EducationRoute
   '/freelance': typeof FreelanceRoute
   '/hackathons': typeof HackathonsRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
@@ -77,6 +86,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/certifications'
+    | '/education'
     | '/freelance'
     | '/hackathons'
     | '/sitemap.xml'
@@ -85,6 +95,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/certifications'
+    | '/education'
     | '/freelance'
     | '/hackathons'
     | '/sitemap.xml'
@@ -93,6 +104,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/certifications'
+    | '/education'
     | '/freelance'
     | '/hackathons'
     | '/sitemap.xml'
@@ -102,6 +114,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CertificationsRoute: typeof CertificationsRoute
+  EducationRoute: typeof EducationRoute
   FreelanceRoute: typeof FreelanceRoute
   HackathonsRoute: typeof HackathonsRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
@@ -122,6 +135,13 @@ declare module '@tanstack/react-router' {
       path: '/certifications'
       fullPath: '/certifications'
       preLoaderRoute: typeof CertificationsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/education': {
+      id: '/education'
+      path: '/education'
+      fullPath: '/education'
+      preLoaderRoute: typeof EducationRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/freelance': {
@@ -158,6 +178,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CertificationsRoute: CertificationsRoute,
+  EducationRoute: EducationRoute,
   FreelanceRoute: FreelanceRoute,
   HackathonsRoute: HackathonsRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
